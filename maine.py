@@ -1,6 +1,7 @@
 import finding
 from findImage import findIMG
 # lol
+#loooooool
 from telebot import types
 import telebot
 import urllib
