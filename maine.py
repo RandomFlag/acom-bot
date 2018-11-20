@@ -70,7 +70,7 @@ def callback_inline(call):
     if True:
         #print (findIMG(comic + '/', page))
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        markup.row('<', str(page.get(call.message.chat.id, 1)) + ' of '  + , '>')
+        markup.row('<', str(page.get(call.message.chat.id, 1)), '>')
         markup.row('/start')
 		for i in range (0,9):
         	bot.send_photo(call.message.chat.id, findIMG(comic.get(call.message.chat.id, '0') + '/', page.get(call.message.chat.id, 1)) +i, reply_markup=markup)
