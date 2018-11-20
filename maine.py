@@ -72,8 +72,8 @@ def callback_inline(call):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.row('<', str(page.get(call.message.chat.id, 1)), '>')
         markup.row('/start')
-		for i in range (0,9):
-        	bot.send_photo(call.message.chat.id, findIMG(comic.get(call.message.chat.id, '0') + '/', page.get(call.message.chat.id, 1)) +i, reply_markup=markup)
+		for ipr in range(0,9) :
+        	bot.send_photo(call.message.chat.id, findIMG(comic.get(call.message.chat.id, '0') + '/', page.get(call.message.chat.id, 1)) +ipr, reply_markup=markup)
         comic[call.message.chat.id] = call.data
         state [call.message.chat.id] = 'ReadCom'
         
