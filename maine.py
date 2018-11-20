@@ -1,7 +1,5 @@
 import finding
 from findImage import findIMG
-# lol
-#loooooool
 from telebot import types
 import telebot
 import urllib
@@ -53,12 +51,13 @@ def handle_text(message):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.row('<', str(page.get(message.chat.id, 1)), '>')
         markup.row('/start')
-        bot.send_photo(message.chat.id, findIMG(comic.get(message.chat.id, '0') + '/', page.get(message.chat.id, 1)), reply_markup=markup)
+        bot.send_photo(message.chat.id, findIMG(comic.get(message.chat.id, '0') + , page.get(message.chat.id, 1)), reply_markup=markup)
     elif state.get(message.chat.id, 'FindCom')  == 'InputPage':
         page [message.chat.id] = int(message.text, 10)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.row('<', str(page.get(message.chat.id, 1)), '>')
         markup.row('/start')
+		come
         bot.send_photo(message.chat.id, findIMG(comic.get(message.chat.id, '0') + '/', page.get(message.chat.id, 1)), reply_markup=markup)
         state [message.chat.id] = 'ReadCom'
         
@@ -72,9 +71,10 @@ def callback_inline(call):
     if True:
         #print (findIMG(comic + '/', page))
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        markup.row('<', str(page.get(call.message.chat.id, 1)), '>')
+        markup.row('<', str(page.get(call.message.chat.id, 1)) + ' of '  + , '>')
         markup.row('/start')
-        bot.send_photo(call.message.chat.id, findIMG(comic.get(call.message.chat.id, '0') + '/', page.get(call.message.chat.id, 1)), reply_markup=markup)
+		for i in range (0,9):
+        	bot.send_photo(call.message.chat.id, findIMG(comic.get(call.message.chat.id, '0') + '/', page.get(call.message.chat.id, 1)) +i, reply_markup=markup)
         comic[call.message.chat.id] = call.data
         state [call.message.chat.id] = 'ReadCom'
         
