@@ -57,7 +57,6 @@ def handle_text(message):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.row('<', str(page.get(message.chat.id, 1)), '>')
         markup.row('/start')
-		come
         bot.send_photo(message.chat.id, findIMG(comic.get(message.chat.id, '0') + '/', page.get(message.chat.id, 1)), reply_markup=markup)
         state [message.chat.id] = 'ReadCom'
         
