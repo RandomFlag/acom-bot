@@ -2,9 +2,6 @@ import finding
 from findImage import findIMG, lastPage
 from telebot import types
 import telebot
-import urllib
-import urllib.request
-import webbrowser
 page = {}
 bot = telebot.TeleBot("747515125:AAE-WHlMw7yrvFpzUGQJuxVyofCdhxK6V0c")
 state = {}
@@ -41,7 +38,7 @@ def handle_text(message):
         if message.text == '<':
             page [message.chat.id] -=1
         elif message.text == '>':
-            page [message.chat.id] +=1
+            page[message.chat.id] += 1
         elif message.text == str(page.get(message.chat.id, 1)) + '/' + lastPage(comic.get(message.chat.id, '0')):
             state [message.chat.id] = 'InputPage'
             markup = types.ReplyKeyboardRemove()
