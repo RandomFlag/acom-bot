@@ -1,5 +1,5 @@
 import finding
-from findImage import findIMG
+from findImage import findIMG, lastPage
 from telebot import types
 import telebot
 import urllib
@@ -10,7 +10,7 @@ bot = telebot.TeleBot("747515125:AAE-WHlMw7yrvFpzUGQJuxVyofCdhxK6V0c")
 state = {}
 comic = {}
 
-
+#"/start" message
 @bot.message_handler(commands=['start', 'help'])
 def handle_start_help(message):
     global page
@@ -18,15 +18,15 @@ def handle_start_help(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     markup.row('/start')
     bot.send_message(message.chat.id, "Search:", reply_markup=markup)
-    print (message.chat.id)
     state [message.chat.id] = 'FindCom'
     
-
+#response on text
 @bot.message_handler(content_types=["text"])
 def handle_text(message):
     global state
     global page
-    #print (state)
+    
+    #Finding Comics
     if state.get(message.chat.id, 'FindCom')  == 'FindCom':
         urls, names = finding.findCom (message.text)
         keyboard = types.InlineKeyboardMarkup()
@@ -35,27 +35,28 @@ def handle_text(message):
             callback_button = types.InlineKeyboardButton(text = q, callback_data=urls[ind])
             keyboard.add(callback_button)
         bot.send_message(message.chat.id, "Results for: " + message.text , reply_markup=keyboard)
+        
+    #Reading Comics
     elif state.get(message.chat.id, 'FindCom')  == 'ReadCom':
-        ##print (state)
         if message.text == '<':
             page [message.chat.id] -=1
-            #print ('<')
         elif message.text == '>':
             page [message.chat.id] +=1
-            #print ('>')
-        elif message.text == str(page.get(message.chat.id, 1)):
+        elif message.text == str(page.get(message.chat.id, 1)) + '/' + lastPage(comic.get(message.chat.id, '0')):
             state [message.chat.id] = 'InputPage'
             markup = types.ReplyKeyboardRemove()
             bot.send_message(message.chat.id, 'Choose your page:' , reply_markup=markup)
             return
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        markup.row('<', str(page.get(message.chat.id, 1)), '>')
+        markup.row('<', str(page.get(message.chat.id, 1)) + '/' + lastPage(comic.get(message.chat.id, '0')), '>')
         markup.row('/start')
-        bot.send_photo(message.chat.id, findIMG(comic.get(message.chat.id, '0') , page.get(message.chat.id, 1)), reply_markup=markup)
+        bot.send_photo(message.chat.id, findIMG(comic.get(message.chat.id, '0') + '/', page.get(message.chat.id, 1)), reply_markup=markup)
+        
+    #Inputting page
     elif state.get(message.chat.id, 'FindCom')  == 'InputPage':
         page [message.chat.id] = int(message.text, 10)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        markup.row('<', str(page.get(message.chat.id, 1)), '>')
+        markup.row('<', str(page.get(message.chat.id, 1))+ '/' + lastPage(comic.get(message.chat.id, '0')), '>')
         markup.row('/start')
         bot.send_photo(message.chat.id, findIMG(comic.get(message.chat.id, '0') + '/', page.get(message.chat.id, 1)), reply_markup=markup)
         state [message.chat.id] = 'ReadCom'
@@ -68,12 +69,10 @@ def callback_inline(call):
     global state
     comic[call.message.chat.id] = call.data
     if True:
-        #print (findIMG(comic + '/', page))
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        markup.row('<', str(page.get(call.message.chat.id, 1)), '>')
+        markup.row('<', str(page.get(call.message.chat.id, 1)) + '/' + lastPage(comic.get(call.message.chat.id, '0')), '>')
         markup.row('/start')
-		for ipr in range(0,9) :
-        	bot.send_photo(call.message.chat.id, findIMG(comic.get(call.message.chat.id, '0') + '/', page.get(call.message.chat.id, 1)) +ipr, reply_markup=markup)
+        bot.send_photo(call.message.chat.id, findIMG(comic.get(call.message.chat.id, '0') + '/', page.get(call.message.chat.id, 1)), reply_markup=markup)
         comic[call.message.chat.id] = call.data
         state [call.message.chat.id] = 'ReadCom'
         
