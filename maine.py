@@ -38,7 +38,7 @@ def handle_text(message):
         if message.text == '<':
             page [message.chat.id] -=1
         elif message.text == '>':
-            page[message.chat.id] += 1
+            page [message.chat.id] += 1
         elif message.text == str(page.get(message.chat.id, 1)) + '/' + lastPage(comic.get(message.chat.id, '0')):
             state [message.chat.id] = 'InputPage'
             markup = types.ReplyKeyboardRemove()
