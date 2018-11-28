@@ -7,7 +7,7 @@ bot = telebot.TeleBot("747515125:AAF5kvmBAkR_yjZ-YOmPFjCJZReYrz1aBaM")
 state = {}
 comic = {}
 
-#"/start" message
+#"/start" message l
 @bot.message_handler(commands=['start', 'help'])
 def handle_start_help(message):
     global page
