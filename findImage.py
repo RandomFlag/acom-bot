@@ -12,7 +12,7 @@ def findIMG(ComicURL, Page):
 
 
 def lastPage(ComicURL):
-    f_raw = requests.post(ComicURL + '1',  data={'ageRestrict': '18'})
+    f_raw = requests.post(ComicURL + '/1',  data={'ageRestrict': '18'})
     f = f_raw.text
     ind_b = (f.find('<span class="issueNumber">'))
     ind_b = (f.find('/', ind_b))

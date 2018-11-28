@@ -3,7 +3,7 @@ from findImage import findIMG, lastPage
 from telebot import types
 import telebot
 page = {}
-bot = telebot.TeleBot("747515125:AAE-WHlMw7yrvFpzUGQJuxVyofCdhxK6V0c")
+bot = telebot.TeleBot("747515125:AAF5kvmBAkR_yjZ-YOmPFjCJZReYrz1aBaM")
 state = {}
 comic = {}
 
