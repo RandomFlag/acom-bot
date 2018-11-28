@@ -1,1 +1,1 @@
-web: python maine.py $PORT
+bot: python maine.py $PORT
