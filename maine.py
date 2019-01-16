@@ -38,25 +38,39 @@ def handle_text(message):
         if message.text == '<':
             page [message.chat.id] -=10
         elif message.text == '>':
-            page[message.chat.id] += 10
-        elif message.text == str(page.get(message.chat.id, 1)) + '/' + lastPage(comic.get(message.chat.id, '0')):
+            page [message.chat.id] += 10
+        elif message.text == str(page.get(message.chat.id, 1)) + '-' + str(page.get(message.chat.id, 1) + 9) + '/' + lastPage(comic.get(message.chat.id, '0')):
+            state [message.chat.id] = 'InputPage'
+            markup = types.ReplyKeyboardRemove()
+            bot.send_message(message.chat.id, 'Choose your page:' , reply_markup=markup)
+            return
+        elif message.text == str(page.get(message.chat.id, 1)) + '-' + lastPage(comic.get(message.chat.id, '0')) + 9 + '/' + lastPage(comic.get(message.chat.id, '0')):
             state [message.chat.id] = 'InputPage'
             markup = types.ReplyKeyboardRemove()
             bot.send_message(message.chat.id, 'Choose your page:' , reply_markup=markup)
             return
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        markup.row('<', str(page.get(message.chat.id, 1)) + '/' + lastPage(comic.get(message.chat.id, '0')), '>')
+        if ((page.get(message.chat.id, 1) + 9) <= int(lastPage(comic.get(message.chat.id, '0')))):
+            markup.row('<', str(page.get(message.chat.id, 1)) + '-' + str(page.get(message.chat.id, 1) + 9) + '/' + lastPage(comic.get(message.chat.id, '0')), '>')
+        else:
+            markup.row('<', str(page.get(message.chat.id, 1)) + '-' + lastPage(comic.get(message.chat.id, '0')) + '/' + lastPage(comic.get(message.chat.id, '0')), '>')
         markup.row('/start')
-        for i in range(page, page + 10)
-            bot.send_photo(message.chat.id, findIMG(comic.get(message.chat.id, '0') + '/', page.get(message.chat.id, 1)), reply_markup=markup)
+        for i in range(page.get(message.chat.id, 1), page.get(message.chat.id, 1) + 10):
+            if (i <= int(lastPage(comic.get(message.chat.id, '0')))):
+                bot.send_photo(message.chat.id, findIMG(comic.get(message.chat.id, '0') + '/', i), caption=i, reply_markup=markup)
         
     #Inputting page
     elif state.get(message.chat.id, 'FindCom')  == 'InputPage':
         page [message.chat.id] = int(message.text, 10)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        markup.row('<', str(page.get(message.chat.id, 1))+ '/' + lastPage(comic.get(message.chat.id, '0')), '>')
+        if ((page.get(message.chat.id, 1) + 9) <= int(lastPage(comic.get(message.chat.id, '0')))):
+            markup.row('<', str(page.get(message.chat.id, 1)) + '-' + str(page.get(message.chat.id, 1) + 9) + '/' + lastPage(comic.get(message.chat.id, '0')), '>')
+        else:
+            markup.row('<', str(page.get(message.chat.id, 1)) + '-' + lastPage(comic.get(message.chat.id, '0')) + '/' + lastPage(comic.get(message.chat.id, '0')), '>')
         markup.row('/start')
-        bot.send_photo(message.chat.id, findIMG(comic.get(message.chat.id, '0') + '/', page.get(message.chat.id, 1)), reply_markup=markup)
+        for i in range(page.get(message.chat.id, 1), page.get(message.chat.id, 1) + 10):
+            if (i <= int(lastPage(comic.get(message.chat.id, '0')))):
+                bot.send_photo(message.chat.id, findIMG(comic.get(message.chat.id, '0') + '/', i), caption=i, reply_markup=markup)
         state [message.chat.id] = 'ReadCom'
         
         
@@ -68,9 +82,14 @@ def callback_inline(call):
     comic[call.message.chat.id] = call.data
     if True:
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        markup.row('<', str(page.get(call.message.chat.id, 1)) + '/' + lastPage(comic.get(call.message.chat.id, '0')), '>')
+        if ((page.get(call.message.chat.id, 1) + 9) <= int(lastPage(comic.get(call.message.chat.id, '0')))):
+            markup.row('<', str(page.get(call.message.chat.id, 1)) + '-' + str(page.get(call.message.chat.id, 1) + 9) + '/' + lastPage(comic.get(call.message.chat.id, '0')), '>')
+        else:
+            markup.row('<', str(page.get(call.message.chat.id, 1)) + '-' + lastPage(comic.get(call.message.chat.id, '0')) + '/' + lastPage(comic.get(call.message.chat.id, '0')), '>')
         markup.row('/start')
-        bot.send_photo(call.message.chat.id, findIMG(comic.get(call.message.chat.id, '0') + '/', page.get(call.message.chat.id, 1)), reply_markup=markup)
+        for i in range(page.get(call.message.chat.id, 1), page.get(call.message.chat.id, 1) + 10):
+            if (i <= int(lastPage(comic.get(call.message.chat.id, '0')))):
+                bot.send_photo(call.message.chat.id, findIMG(comic.get(call.message.chat.id, '0') + '/', i), caption=i, reply_markup=markup)
         comic[call.message.chat.id] = call.data
         state [call.message.chat.id] = 'ReadCom'
         
