@@ -36,9 +36,9 @@ def handle_text(message):
     #Reading Comics
     elif state.get(message.chat.id, 'FindCom')  == 'ReadCom':
         if message.text == '<':
-            page [message.chat.id] -=1
+            page [message.chat.id] -=10
         elif message.text == '>':
-            page[message.chat.id] += 1
+            page[message.chat.id] += 10
         elif message.text == str(page.get(message.chat.id, 1)) + '/' + lastPage(comic.get(message.chat.id, '0')):
             state [message.chat.id] = 'InputPage'
             markup = types.ReplyKeyboardRemove()
@@ -47,7 +47,8 @@ def handle_text(message):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.row('<', str(page.get(message.chat.id, 1)) + '/' + lastPage(comic.get(message.chat.id, '0')), '>')
         markup.row('/start')
-        bot.send_photo(message.chat.id, findIMG(comic.get(message.chat.id, '0') + '/', page.get(message.chat.id, 1)), reply_markup=markup)
+        for i in range(page, page + 10)
+            bot.send_photo(message.chat.id, findIMG(comic.get(message.chat.id, '0') + '/', page.get(message.chat.id, 1)), reply_markup=markup)
         
     #Inputting page
     elif state.get(message.chat.id, 'FindCom')  == 'InputPage':
