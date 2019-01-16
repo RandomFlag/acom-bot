@@ -47,7 +47,7 @@ def handle_text(message):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.row('<', str(page.get(message.chat.id, 1)) + '/' + lastPage(comic.get(message.chat.id, '0')), '>')
         markup.row('/start')
-        bot.send_photo(message.chat.id, findIMG(comic.get(message.chat.id, '0') + '/', page.get(message.chat.id, 1)), reply_markup=markup)
+        bot.send_message(message.chat.id, findIMG(comic.get(message.chat.id, '0') + '/', page.get(message.chat.id, 1)), reply_markup=markup)
         
     #Inputting page
     elif state.get(message.chat.id, 'FindCom')  == 'InputPage':
@@ -55,7 +55,7 @@ def handle_text(message):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.row('<', str(page.get(message.chat.id, 1))+ '/' + lastPage(comic.get(message.chat.id, '0')), '>')
         markup.row('/start')
-        bot.send_photo(message.chat.id, findIMG(comic.get(message.chat.id, '0') + '/', page.get(message.chat.id, 1)), reply_markup=markup)
+        bot.send_message(message.chat.id, findIMG(comic.get(message.chat.id, '0') + '/', page.get(message.chat.id, 1)), reply_markup=markup)
         state [message.chat.id] = 'ReadCom'
         
         
