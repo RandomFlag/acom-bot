@@ -47,7 +47,7 @@ def handle_text(message):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.row('<', str(page.get(message.chat.id, 1)) + '/' + lastPage(comic.get(message.chat.id, '0')), '>')
         markup.row('/start')
-        bot.edit_message_text(message.chat.id, findIMG(comic.get(message.chat.id, '0') + '/', page.get(message.chat.id, 1)), reply_markup=markup)
+        bot.send_photo(message.chat.id, findIMG(comic.get(message.chat.id, '0') + '/', page.get(message.chat.id, 1)), reply_markup=markup)
         
     #Inputting page
     elif state.get(message.chat.id, 'FindCom')  == 'InputPage':
@@ -55,7 +55,7 @@ def handle_text(message):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.row('<', str(page.get(message.chat.id, 1))+ '/' + lastPage(comic.get(message.chat.id, '0')), '>')
         markup.row('/start')
-        bot.send_message(message.chat.id, findIMG(comic.get(message.chat.id, '0') + '/', page.get(message.chat.id, 1)), reply_markup=markup)
+        bot.send_photo(message.chat.id, findIMG(comic.get(message.chat.id, '0') + '/', page.get(message.chat.id, 1)), reply_markup=markup)
         state [message.chat.id] = 'ReadCom'
         
         
@@ -69,7 +69,7 @@ def callback_inline(call):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.row('<', str(page.get(call.message.chat.id, 1)) + '/' + lastPage(comic.get(call.message.chat.id, '0')), '>')
         markup.row('/start')
-        bot.send_message(call.message.chat.id, findIMG(comic.get(call.message.chat.id, '0') + '/', page.get(call.message.chat.id, 1)), reply_markup=markup)
+        bot.send_photo(call.message.chat.id, findIMG(comic.get(call.message.chat.id, '0') + '/', page.get(call.message.chat.id, 1)), reply_markup=markup)
         comic[call.message.chat.id] = call.data
         state [call.message.chat.id] = 'ReadCom'
         
