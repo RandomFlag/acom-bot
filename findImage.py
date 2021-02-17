@@ -3,7 +3,7 @@ import requests
 
 def findIMG(ComicURL, Page):
     baseUrl = "/upload/!c/"
-    f_raw = requests.post(ComicURL + str(Page), data={'ageRestrict': '18'})
+    f_raw = requests.get(ComicURL + str(Page))
     f = f_raw.text
     ind_b = (f.find(baseUrl))
     ind_e = (f.find(".", ind_b))
@@ -12,7 +12,7 @@ def findIMG(ComicURL, Page):
 
 
 def lastPage(ComicURL):
-    f_raw = requests.post(ComicURL + '/1',  data={'ageRestrict': '18'})
+    f_raw = requests.get(ComicURL + '/1')
     f = f_raw.text
     ind_b = (f.find('<span class="issueNumber">'))
     ind_b = (f.find('/', ind_b))
